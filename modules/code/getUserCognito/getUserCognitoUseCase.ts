@@ -8,10 +8,10 @@ class GetUserCognitoUseCase {
     const { UserAttributes } = result;
 
     if (UserAttributes) {
-      const phone_number = UserAttributes.find(
+      const phoneNumberData = UserAttributes.find(
         (attr) => attr.Name === "phone_number"
       );
-      return { phone_number };
+      return phoneNumberData;
     }
 
     return;
