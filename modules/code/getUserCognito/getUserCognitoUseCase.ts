@@ -11,11 +11,23 @@ class GetUserCognitoUseCase {
       const phoneNumberData = UserAttributes.find(
         (attr) => attr.Name === "phone_number"
       );
-      return phoneNumberData;
+
+      if (phoneNumberData?.Value) {
+        const formatedNumber = this.formatPhoneNumber(phoneNumberData.Value);
+        return { phoneNumber: formatedNumber };
+      } else {
+        throw new Error("User doesnt have phone_number");
+      }
     }
 
     return;
   }
+
+  private formatPhoneNumber = (numero: string) => {
+    const numeroLimpo = numero.replace(/\D+/g, "");
+    const parte3 = numeroLimpo.slice(-4);
+    return `(XX) XXXX-${parte3}`;
+  };
 }
 
 export { GetUserCognitoUseCase };
