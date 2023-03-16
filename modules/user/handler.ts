@@ -7,7 +7,7 @@ const MONGODB_URI = process.env.MONGODB_URI;
 const repository = new UserRepository(MONGODB_URI);
 const createUserUseCase = new CreateUserUseCase(repository);
 
-module.exports.createUser = errorHandler(async (event: any) => {
+export const createUser = errorHandler(async (event: any) => {
   const data = JSON.parse(event.body);
   return await createUserUseCase.execute(data);
 });
