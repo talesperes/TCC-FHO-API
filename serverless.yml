@@ -8,6 +8,7 @@ provider:
   environment:
     MONGODB_URI: ${env:MONGODB_URI}
     COGNITO_USER_POOL_ID: ${env:COGNITO_USER_POOL_ID}
+    JWT_SECRET_KEY: ${env:JWT_SECRET_KEY}
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -35,6 +36,13 @@ functions:
     events:
       - http:
           path: code/verifyCode
+          method: post
+          cors: true
+  getUserCognito:
+    handler: dist/modules/code/getUser/handler.getUserCognito
+    events:
+      - http:
+          path: cognito/user
           method: post
           cors: true
 

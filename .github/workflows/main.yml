@@ -31,3 +31,4 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         MONGODB_URI: ${{ secrets.MONGODB_URI }}
         COGNITO_USER_POOL_ID: ${{ secrets.COGNITO_USER_POOL_ID }}
+        JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
