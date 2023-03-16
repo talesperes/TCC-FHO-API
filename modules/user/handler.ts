@@ -1,7 +1,7 @@
 import UserRepository from "./repository";
 import CreateUserUseCase from "./usecase/createUserUseCase";
 import errorHandler from "../../middleware/errorHandler";
-import { APIGatewayProxyHandler, APIGatewayProxyResult } from "aws-lambda";
+import { APIGatewayProxyHandler } from "aws-lambda";
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
