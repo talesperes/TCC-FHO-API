@@ -39,7 +39,7 @@ functions:
           method: post
           cors: true
   getUserCognito:
-    handler: dist/modules/code/getUser/handler.getUserCognito
+    handler: dist/modules/code/getUserCognito/handler.getUserCognito
     events:
       - http:
           path: cognito/user
