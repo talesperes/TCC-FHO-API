@@ -16,7 +16,7 @@ class GetUserCognitoUseCase {
         const formatedNumber = this.formatPhoneNumber(phoneNumberData.Value);
         return { phoneNumber: formatedNumber };
       } else {
-        throw new Error("User doesnt have phone_number");
+        throw new Error("User doesnt have phone number");
       }
     }
 

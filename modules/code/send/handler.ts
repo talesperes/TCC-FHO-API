@@ -8,8 +8,8 @@ const useCase = new SendCodeUseCase(repository);
 
 const sendCode: APIGatewayProxyHandler = errorHandler(
   async (event: { body: string }) => {
-    const { phoneNumber, username } = JSON.parse(event.body);
-    return await useCase.execute(phoneNumber, username);
+    const { username } = JSON.parse(event.body);
+    return await useCase.execute(username);
   }
 );
 
