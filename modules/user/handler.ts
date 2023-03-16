@@ -9,18 +9,9 @@ const repository = new UserRepository(MONGODB_URI);
 const createUserUseCase = new CreateUserUseCase(repository);
 
 const createUserHandler: APIGatewayProxyHandler = errorHandler(
-  async (event: any): Promise<APIGatewayProxyResult> => {
+  async (event: any) => {
     const data = JSON.parse(event.body);
-    const result = await createUserUseCase.execute(data);
-
-    return {
-      statusCode: 201,
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify(result),
-    };
+    return await createUserUseCase.execute(data);
   }
 );
 
