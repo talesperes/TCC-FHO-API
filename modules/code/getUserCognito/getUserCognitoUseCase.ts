@@ -5,7 +5,16 @@ class GetUserCognitoUseCase {
 
   async execute(username: string) {
     const result = await this.repository.getUser(username);
-    return result
+    const { UserAttributes } = result;
+
+    if (UserAttributes) {
+      const phone_number = UserAttributes.find(
+        (attr) => attr.Name === "phone_number"
+      );
+      return { phone_number };
+    }
+
+    return;
   }
 }
 
