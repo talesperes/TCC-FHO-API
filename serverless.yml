@@ -7,13 +7,28 @@ provider:
   region: sa-east-1
   environment:
     MONGODB_URI: ${env:MONGODB_URI}
+    COGNITO_USER_POOL_ID: ${env:COGNITO_USER_POOL_ID}
 
 functions:
   createUser:
-    handler: dist/modules/user/handler.createUser
+    handler: dist/modules/user/create/handler.createUser
     events:
       - http:
           path: users
+          method: post
+          cors: true
+  sendCode:
+    handler: dist/modules/code/send/handler.sendCode
+    events:
+      - http:
+          path: code/sendCode
+          method: post
+          cors: true
+  verifyCode:
+    handler: dist/modules/code/verify/handler.verifyCode
+    events:
+      - http:
+          path: code/verifyCode
           method: post
           cors: true
 

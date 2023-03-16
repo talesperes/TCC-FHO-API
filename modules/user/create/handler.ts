@@ -1,6 +1,6 @@
-import UserRepository from "./repository";
-import CreateUserUseCase from "./usecase/createUserUseCase";
-import errorHandler from "../../middleware/errorHandler";
+import UserRepository from "../repository";
+import CreateUserUseCase from "./createUserUseCase";
+import errorHandler from "../../../middleware/errorHandler";
 import { APIGatewayProxyHandler } from "aws-lambda";
 import { userSchema } from "./userSchema";
 
