@@ -12,6 +12,7 @@ provider:
     - Effect: Allow
       Action:
         - sns:Publish
+        - cognito-idp:AdminUpdateUserAttributes
       Resource: '*'
 
 functions:
