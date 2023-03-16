@@ -1,0 +1,21 @@
+service: tcc-api
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: dev
+  region: us-east-1
+  environment:
+    MONGODB_URI: YOUR_MONGODB_URI
+
+functions:
+  createUser:
+    handler: dist/modules/user/handler.createUser
+    events:
+      - http:
+          path: users
+          method: post
+          cors: true
+
+plugins:
+  - serverless-offline
