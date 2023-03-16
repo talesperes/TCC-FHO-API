@@ -6,7 +6,7 @@ provider:
   stage: dev
   region: sa-east-1
   environment:
-    MONGODB_URI: YOUR_MONGODB_URI
+    MONGODB_URI: ${env:MONGODB_URI}
 
 functions:
   createUser:
