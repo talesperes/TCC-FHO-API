@@ -49,6 +49,42 @@ class VerificationRepository {
     }
     return undefined;
   }
+
+  async getUser(username: string) {
+    if (!UserPoolId) {
+      throw new Error("UserPoolId is not defined");
+    }
+
+    const params = {
+      UserPoolId,
+      Username: username,
+    };
+
+    try {
+      const result = await cognito.adminGetUser(params).promise();
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async createUser(username: string) {
+    if (!UserPoolId) {
+      throw new Error("UserPoolId is not defined");
+    }
+
+    const params = {
+      UserPoolId,
+      Username: username,
+    };
+
+    try {
+      const result = await cognito.adminCreateUser(params).promise();
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default VerificationRepository;
