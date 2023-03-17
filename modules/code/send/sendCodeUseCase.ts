@@ -1,4 +1,9 @@
 import VerificationRepository from "../repository";
+import twilio from "twilio";
+
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const serviceSid = process.env.TWILIO_SERVICE_SID || "";
 
 class SendCodeUseCase {
   constructor(private repository: VerificationRepository) {}
@@ -28,8 +33,20 @@ class SendCodeUseCase {
           }
         }
         const phoneNumber = phoneNumberData.Value;
-        await this.repository.sendSMS(phoneNumber, message);
-        await this.repository.saveCodeToCognito(username, code);
+
+        const client = twilio(accountSid, authToken);
+
+        client.verify.v2
+          .services(serviceSid)
+          .verifications.create({
+            to: phoneNumber,
+            channel: "sms",
+          })
+          .then((verification) => console.log(verification))
+          .catch((error) => console.error(error));
+
+        // await this.repository.sendSMS(phoneNumber, message);
+        // await this.repository.saveCodeToCognito(username, code);
       } else {
         throw new Error("User doesnt have phone number");
       }
