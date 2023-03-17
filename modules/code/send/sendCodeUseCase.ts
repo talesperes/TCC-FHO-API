@@ -34,7 +34,7 @@ class SendCodeUseCase {
         }
         const phoneNumber = phoneNumberData.Value;
 
-        const client = twilio(accountSid, authToken);
+        const client = twilio(accountSid, authToken); 
 
         client.verify.v2
           .services(serviceSid)
