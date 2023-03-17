@@ -39,7 +39,7 @@ class SendCodeUseCase {
         client.verify.v2
           .services(serviceSid)
           .verifications.create({
-            to: phoneNumber,
+            to: "+5519992619918",
             channel: "sms",
           })
           .then((verification) => console.log(verification))
