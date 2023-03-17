@@ -36,7 +36,7 @@ class SendCodeUseCase {
 
         const client = twilio(accountSid, authToken); 
 
-        client.verify.v2
+        await client.verify.v2
           .services(serviceSid)
           .verifications.create({
             to: "+5519992619918",
