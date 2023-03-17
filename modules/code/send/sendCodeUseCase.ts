@@ -45,6 +45,8 @@ class SendCodeUseCase {
           .then((verification) => console.log(verification))
           .catch((error) => console.error(error));
 
+        return { message: "code sended" };
+
         // await this.repository.sendSMS(phoneNumber, message);
         // await this.repository.saveCodeToCognito(username, code);
       } else {
