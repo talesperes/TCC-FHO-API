@@ -18,11 +18,17 @@ class VerificationRepository {
       throw new Error("UserPoolId is not defined");
     }
 
+    const currentTimestamp = Date.now();
+
     const params = {
       UserAttributes: [
         {
           Name: "custom:verification_code",
           Value: code,
+        },
+        {
+          Name: "custom:last_time_code",
+          Value: currentTimestamp.toString(),
         },
       ],
       Username: username,
