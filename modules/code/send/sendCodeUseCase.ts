@@ -23,7 +23,7 @@ class SendCodeUseCase {
             savedTimestamp,
             currentTimestamp
           );
-          if (diffGreaterThan60Seconds) {
+          if (!diffGreaterThan60Seconds) {
             return;
           }
         }
