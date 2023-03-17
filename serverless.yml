@@ -17,7 +17,9 @@ provider:
       Action:
         - sns:Publish
         - cognito-idp:*
-        - logs:*
+        - logs:CreateLogGroup
+        - logs:CreateLogStream
+        - logs:PutLogEvents
       Resource: '*'
 
 functions:
