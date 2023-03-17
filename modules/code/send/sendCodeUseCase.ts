@@ -9,7 +9,6 @@ class SendCodeUseCase {
   constructor(private repository: VerificationRepository) {}
 
   async execute(username: string) {
-    const code = Math.floor(Math.random() * 900000 + 100000).toString();
     const user = await this.repository.getUser(username);
     const { UserAttributes } = user;
     if (UserAttributes) {
