@@ -17,11 +17,11 @@ class SendCodeUseCase {
       );
       if (phoneNumberData?.Value) {
         if (lastTimeCodeData?.Value) {
-          const savedTimestamp = new Date(lastTimeCodeData.Value).getTime();
+          const savedTimestamp = lastTimeCodeData.Value;
           const currentTimestamp = Date.now();
           const diffGreaterThan60Seconds = this.diffGreaterThan60Seconds(
-            savedTimestamp,
-            currentTimestamp
+            currentTimestamp,
+            savedTimestamp
           );
           if (!diffGreaterThan60Seconds) {
             return;
