@@ -17,6 +17,7 @@ provider:
       Action:
         - sns:Publish
         - cognito-idp:*
+        - logs:*
       Resource: '*'
 
 functions:
