@@ -7,7 +7,6 @@ provider:
   region: sa-east-1
   environment:
     MONGODB_URI: ${env:MONGODB_URI}
-    COGNITO_USER_POOL_ID: ${env:COGNITO_USER_POOL_ID}
     JWT_SECRET_KEY: ${env:JWT_SECRET_KEY}
     TWILIO_ACCOUNT_SID: ${env:TWILIO_ACCOUNT_SID}
     TWILIO_AUTH_TOKEN: ${env:TWILIO_AUTH_TOKEN}
@@ -15,12 +14,10 @@ provider:
   iamRoleStatements:
     - Effect: Allow
       Action:
-        - sns:Publish
-        - cognito-idp:*
         - logs:CreateLogGroup
         - logs:CreateLogStream
         - logs:PutLogEvents
-      Resource: '*'
+      Resource: "*"
 
 functions:
   createUser:
