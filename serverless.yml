@@ -21,7 +21,7 @@ provider:
 
 functions:
  sendCode:
-  handler: dist/src/handlers/sendCode/handler.sendCode
+  handler: dist/handlers/sendCode/handler.sendCode
   events:
    - http:
       path: code/send
