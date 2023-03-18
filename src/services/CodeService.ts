@@ -11,14 +11,11 @@ const SERVICE_SID = process.env.TWILIO_SERVICE_SID || ""
 class CodeService {
 	constructor() {}
 
-	async send(phoneNumber: string, code: string): Promise<IResponse> {
-		console.log("sending verification code", code)
+	async send(phoneNumber: string): Promise<IResponse> {
 		const client = twilio(ACCOUNT_SID, AUTH_TOKE)
-
-		await client.verify.v2
+		const response = await client.verify.v2
 			.services(SERVICE_SID)
 			.verifications.create({
-				customCode: "123456",
 				to: phoneNumber,
 				channel: "sms",
 			})
@@ -27,17 +24,20 @@ class CodeService {
 				throw new VerificationCodeNotSentException()
 			})
 
-		return { message: "verification code sent" }
+		return {
+			message: "verification code sent",
+			data: { serviceSid: response.serviceSid },
+		}
 	}
 
-	async verify(phoneNumber: string, code: string): Promise<IResponse> {
+	async verify(verificationSid: string, code: string): Promise<IResponse> {
 		const client = twilio(ACCOUNT_SID, AUTH_TOKE)
 
 		const verification = await client.verify.v2
 			.services(SERVICE_SID)
 			.verificationChecks.create({
-				to: phoneNumber,
 				code,
+				verificationSid,
 			})
 			.catch(() => {
 				throw new VerificationCodeCheckException()

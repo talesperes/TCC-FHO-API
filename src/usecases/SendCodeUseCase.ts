@@ -21,9 +21,15 @@ class SendCodeUseCase {
 		}
 
 		const { phoneNumber } = user
-		const verificationCode = verificationCodeGenerator()
-		await this.userRepository.updateUser(cpf, { verificationCode })
-		return await this.codeService.send(phoneNumber, verificationCode)
+		const sendCodeResponse = await this.codeService.send(phoneNumber)
+		const {
+			message,
+			data: { verificationSid },
+		} = sendCodeResponse
+
+		await this.userRepository.updateUser(cpf, { verificationSid })
+
+		return { message }
 	}
 }
 

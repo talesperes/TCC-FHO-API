@@ -20,13 +20,9 @@ class SendCodeUseCase {
 			throw new UserNotFoundException()
 		}
 
-		const { verificationCode, phoneNumber } = user
+		const { verificationSid } = user
 
-		if (verificationCode != code) {
-			throw new InvalidVerificationCodeException()
-		}
-
-		return await this.codeService.verify(phoneNumber, code)
+		return await this.codeService.verify(verificationSid, code)
 	}
 }
 
