@@ -26,7 +26,7 @@ class CodeService {
 
 		return {
 			message: "verification code sent",
-			data: { serviceSid: response.sid },
+			data: { sid: response.sid },
 		}
 	}
 
