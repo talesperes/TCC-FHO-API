@@ -29,4 +29,4 @@ class SendCodeUseCase {
 	}
 }
 
-export { SendCodeUseCase }
+export default SendCodeUseCase

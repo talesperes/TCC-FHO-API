@@ -1,16 +1,26 @@
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"
-import responseMiddleware from "./responseMiddleware"
-import { getUsersUseCase } from "./userUseCase"
+import { APIGatewayProxyEvent, APIGatewayProxyHandler } from "aws-lambda"
+import { CodeService } from "../services/CodeService"
+import responseMiddleware from "../middleware/responseMiddleware"
 import UserRepository from "../repositories/UserRepository"
+import SendCodeUseCase from "../usecases/SendCodeUseCase"
 
-const LoginHandler = async (
-	event: APIGatewayProxyEvent
-): Promise<APIGatewayProxyResult> => {
-	const { cpf } = event.pathParameters
-	const repository = new UserRepository()
-	const usecase = new LoginUseCase(repository)
+const MONGODB_URI = process.env.MONGODB_URI || ""
 
-	return usecase.execute(cpf)
+interface IRequest extends APIGatewayProxyEvent {
+	pathParameters: {
+		cpf: string
+	}
 }
 
-export const getUsers = responseMiddleware(LoginHandler)
+const SendCodeHandler: APIGatewayProxyHandler = responseMiddleware(
+	async (event: IRequest) => {
+		const { cpf } = event.pathParameters
+		const repository = new UserRepository(MONGODB_URI)
+		const codeService = new CodeService()
+		const usecase = new SendCodeUseCase(repository, codeService)
+
+		return await usecase.execute(cpf)
+	}
+)
+
+export { SendCodeHandler as sendCode }

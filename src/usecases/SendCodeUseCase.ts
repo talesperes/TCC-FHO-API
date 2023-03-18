@@ -22,8 +22,8 @@ class SendCodeUseCase {
 		const { phoneNumber } = user
 		const verificationCode = verificationCodeGenerator()
 		await this.userRepository.updateUser(cpf, { verificationCode })
-		await this.codeService.send(phoneNumber, verificationCode)
+		return await this.codeService.send(phoneNumber, verificationCode)
 	}
 }
 
-export { SendCodeUseCase }
+export default SendCodeUseCase
