@@ -14,41 +14,38 @@ class SendCodeUseCase {
 	}
 
 	async execute(cpf: string): Promise<IResponse> {
-		try {
-			const user = await this.userRepository.getUserByCPF(cpf)
+		throw new UserNotFoundException()
 
-			if (!user) {
-				throw new UserNotFoundException()
-			}
+		// const user = await this.userRepository.getUserByCPF(cpf)
 
-			const { phoneNumber, lastCodeTime } = user
+		// if (!user) {
+		// 	throw new UserNotFoundException()
+		// }
 
-			const currentTime = Date.now()
+		// const { phoneNumber, lastCodeTime } = user
 
-			const diffGreaterThanLimit = Math.abs(currentTime - lastCodeTime) / 1000 > 60
+		// const currentTime = Date.now()
 
-			if (lastCodeTime && !diffGreaterThanLimit) {
-				throw new CodeAlreadySentException()
-			}
+		// const diffGreaterThanLimit = Math.abs(currentTime - lastCodeTime) / 1000 > 60
 
-			const sendCodeResponse = await this.codeService.send(phoneNumber)
-			const {
-				message,
-				data: { sid },
-			} = sendCodeResponse
+		// if (lastCodeTime && !diffGreaterThanLimit) {
+		// 	throw new CodeAlreadySentException()
+		// }
 
-			const newLastCodeTime = Date.now()
+		// const sendCodeResponse = await this.codeService.send(phoneNumber)
+		// const {
+		// 	message,
+		// 	data: { sid },
+		// } = sendCodeResponse
 
-			await this.userRepository.updateUser(cpf, {
-				sid,
-				lastCodeTime: newLastCodeTime,
-			})
+		// const newLastCodeTime = Date.now()
 
-			return { message }
-		} catch (error) {
-			console.log("DEU ERRO XD ", error)
-			throw new Error("")
-		}
+		// await this.userRepository.updateUser(cpf, {
+		// 	sid,
+		// 	lastCodeTime: newLastCodeTime,
+		// })
+
+		// return { message }
 	}
 }
 
