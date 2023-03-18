@@ -1,4 +1,5 @@
 import { IResponse } from "../definitions/responses"
+import CodeAlreadySentException from "../exceptions/CodeAlreadySentException"
 import UserNotFoundException from "../exceptions/UserNotFoundException"
 import UserRepository from "../repositories/UserRepository"
 import CodeService from "../services/CodeService"
@@ -19,18 +20,25 @@ class SendCodeUseCase {
 			throw new UserNotFoundException()
 		}
 
-		const { phoneNumber } = user
+		const { phoneNumber, lastCodeTime } = user
+
+		const currentTime = Date.now()
+
+		if (lastCodeTime && !(Math.abs(currentTime - lastCodeTime) / 1000 > 60)) {
+			throw new CodeAlreadySentException()
+		}
+
 		const sendCodeResponse = await this.codeService.send(phoneNumber)
 		const {
 			message,
 			data: { sid },
 		} = sendCodeResponse
 
-		const lastCodeTime = Date.now()
+		const newLastCodeTime = Date.now()
 
 		await this.userRepository.updateUser(cpf, {
 			sid,
-			lastCodeTime,
+			lastCodeTime: newLastCodeTime,
 		})
 
 		return { message }
