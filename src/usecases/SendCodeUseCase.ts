@@ -27,7 +27,12 @@ class SendCodeUseCase {
 			data: { verificationSid },
 		} = sendCodeResponse
 
-		await this.userRepository.updateUser(cpf, { verificationSid })
+		const lastCodeTime = Date.now()
+
+		await this.userRepository.updateUser(cpf, {
+			verificationSid,
+			lastCodeTime,
+		})
 
 		return { message }
 	}
