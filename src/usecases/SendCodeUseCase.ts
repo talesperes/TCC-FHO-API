@@ -1,6 +1,5 @@
 import { IResponse } from "../definitions/responses"
 import UserNotFoundException from "../exceptions/UserNotFoundException"
-import { verificationCodeGenerator } from "../functions/utils"
 import UserRepository from "../repositories/UserRepository"
 import CodeService from "../services/CodeService"
 

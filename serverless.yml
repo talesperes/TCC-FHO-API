@@ -20,13 +20,20 @@ provider:
     Resource: "*"
 
 functions:
- sendCode:
-  handler: dist/handlers/sendCode/handler.sendCode
-  events:
-   - http:
-      path: code/send
-      method: post
-      cors: true
+  sendCode:
+    handler: dist/handlers/sendCode/handler.sendCode
+    events:
+    - http:
+        path: code/send
+        method: post
+        cors: true
+  sendCode:
+    handler: dist/handlers/verifyCode/handler.verifyCode
+    events:
+    - http:
+        path: code/verify
+        method: post
+        cors: true
 
 plugins:
  - serverless-offline

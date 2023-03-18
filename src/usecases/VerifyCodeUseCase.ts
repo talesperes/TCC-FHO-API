@@ -1,5 +1,4 @@
 import UserNotFoundException from "../exceptions/UserNotFoundException"
-import InvalidVerificationCodeException from "../exceptions/InvalidVerificationCodeException"
 import UserRepository from "../repositories/UserRepository"
 import CodeService from "../services/CodeService"
 import { IResponse } from "../definitions/responses"
