@@ -8,6 +8,6 @@
       "forceConsistentCasingInFileNames": true,
       "outDir": "dist"
     },
-    "include": ["./modules/**/*.ts", "./middleware/**/*.ts"],
+    "include": ["./modules/**/*.ts", "src/middleware/**/*.ts"],
     "exclude": ["node_modules"]
   }
