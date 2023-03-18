@@ -1,58 +1,49 @@
-type HandlerFunction = (...args: any[]) => Promise<any>
-type MiddlewareFunction = (fn: HandlerFunction) => HandlerFunction
+import { APIGatewayEvent, APIGatewayProxyResult } from "aws-lambda"
+import { IResponse } from "../definitions/responses"
 
-interface ErrorResponse {
-	statusCode: number
-	errorCode: string
-	message: string
-}
+type Handler = (event: APIGatewayEvent) => Promise<IResponse>
 
-interface Response {
-	statusCode: number
-	errorCode?: string
-	headers: {
-		"Access-Control-Allow-Origin": string
-		"Access-Control-Allow-Credentials": boolean
-	}
-	body: string
-}
-
-const responseMiddleware: MiddlewareFunction =
-	(fn) =>
-	async (...args) => {
-		console.log("responseMiddleware ======= ", { ...args })
+const responseMiddleware = (
+	handler: Handler
+): ((event: APIGatewayEvent) => Promise<APIGatewayProxyResult>) => {
+	return async (event: APIGatewayEvent): Promise<APIGatewayProxyResult> => {
 		try {
-			const result = await fn(...args)
+			const result: IResponse = await handler(event)
 
-			const response: Response = {
+			return {
 				statusCode: 200,
+				body: JSON.stringify({
+					message: result.message,
+					data: result.data,
+				}),
 				headers: {
-					"Access-Control-Allow-Origin": "*",
-					"Access-Control-Allow-Credentials": true,
+					"Content-Type": "application/json",
 				},
-				body: JSON.stringify(result),
+			}
+		} catch (error: unknown) {
+			console.error("Error in responseMiddleware:", error)
+
+			const err = error as {
+				statusCode?: number
+				message?: string
+				errorCode?: string
 			}
 
-			return response
-		} catch (error: any) {
-			const {
-				statusCode = 500,
-				message = "Internal Error",
-				errorCode = "INTERNAL_ERROR",
-			} = error as Partial<ErrorResponse>
+			const statusCode = err.statusCode || 500
+			const message = err.message || "Internal Server Error"
 
-			const errorResponse: Response = {
-				errorCode,
+			return {
 				statusCode,
+				body: JSON.stringify({
+					message,
+					error: err.errorCode || undefined,
+				}),
 				headers: {
-					"Access-Control-Allow-Origin": "*",
-					"Access-Control-Allow-Credentials": true,
+					"Content-Type": "application/json",
 				},
-				body: JSON.stringify({ message }),
 			}
-
-			return errorResponse
 		}
 	}
+}
 
 export default responseMiddleware
