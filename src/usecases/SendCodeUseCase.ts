@@ -1,7 +1,8 @@
+import { IResponse } from "../definitions/responses"
 import UserNotFoundException from "../exceptions/UserNotFoundException"
 import { verificationCodeGenerator } from "../functions/utils"
 import UserRepository from "../repositories/UserRepository"
-import { CodeService } from "../services/CodeService"
+import CodeService from "../services/CodeService"
 
 class SendCodeUseCase {
 	constructor(
@@ -12,7 +13,7 @@ class SendCodeUseCase {
 		this.codeService = codeService
 	}
 
-	async execute(cpf: string) {
+	async execute(cpf: string): Promise<IResponse> {
 		const user = await this.userRepository.getUserByCPF(cpf)
 
 		if (!user) {

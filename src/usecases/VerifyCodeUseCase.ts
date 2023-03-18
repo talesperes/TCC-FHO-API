@@ -1,7 +1,8 @@
 import UserNotFoundException from "../exceptions/UserNotFoundException"
 import InvalidVerificationCodeException from "../exceptions/InvalidVerificationCodeException"
 import UserRepository from "../repositories/UserRepository"
-import { CodeService } from "../services/CodeService"
+import CodeService from "../services/CodeService"
+import { IResponse } from "../definitions/responses"
 
 class SendCodeUseCase {
 	constructor(
@@ -12,7 +13,7 @@ class SendCodeUseCase {
 		this.codeService = codeService
 	}
 
-	async execute(cpf: string, code: string) {
+	async execute(cpf: string, code: string): Promise<IResponse> {
 		const user = await this.userRepository.getUserByCPF(cpf)
 
 		if (!user) {
@@ -25,7 +26,7 @@ class SendCodeUseCase {
 			throw new InvalidVerificationCodeException()
 		}
 
-		await this.codeService.verify(phoneNumber, code)
+		return await this.codeService.verify(phoneNumber, code)
 	}
 }
 
