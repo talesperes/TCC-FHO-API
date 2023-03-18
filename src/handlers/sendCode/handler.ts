@@ -7,7 +7,7 @@ import SendCodeUseCase from "../../usecases/SendCodeUseCase"
 
 const MONGODB_URI = process.env.MONGODB_URI || ""
 
-const handler = responseMiddleware(
+const sendCode = responseMiddleware(
 	async (event: APIGatewayEvent): Promise<IResponse> => {
 		const { cpf }: { cpf: string } = JSON.parse(event.body!)
 		const repository = new UserRepository(MONGODB_URI)
@@ -17,4 +17,4 @@ const handler = responseMiddleware(
 	}
 )
 
-export { handler as sendCode }
+export { sendCode }
