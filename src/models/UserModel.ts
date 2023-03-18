@@ -5,7 +5,7 @@ export interface IUser extends Document {
 	name: string
 	phoneNumber: string
 	type: string
-	serviceSid: string
+	sid: string
 	lastCodeTime: number
 }
 
@@ -14,7 +14,7 @@ const UserSchema = new mongoose.Schema<IUser>({
 	name: { type: String, required: true },
 	phoneNumber: { type: String, required: true },
 	type: { type: String, required: true },
-	serviceSid: { type: String, required: true },
+	sid: { type: String, required: true },
 	lastCodeTime: { type: Number, required: true },
 })
 

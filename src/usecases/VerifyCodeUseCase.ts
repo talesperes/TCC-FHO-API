@@ -19,9 +19,9 @@ class SendCodeUseCase {
 			throw new UserNotFoundException()
 		}
 
-		const { verificationSid } = user
+		const { sid } = user
 
-		return await this.codeService.verify(verificationSid, code)
+		return await this.codeService.verify(sid, code)
 	}
 }
 

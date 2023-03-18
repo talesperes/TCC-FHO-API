@@ -23,13 +23,13 @@ class SendCodeUseCase {
 		const sendCodeResponse = await this.codeService.send(phoneNumber)
 		const {
 			message,
-			data: { serviceSid },
+			data: { sid },
 		} = sendCodeResponse
 
 		const lastCodeTime = Date.now()
 
 		await this.userRepository.updateUser(cpf, {
-			serviceSid,
+			sid,
 			lastCodeTime,
 		})
 
