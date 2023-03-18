@@ -17,6 +17,8 @@ const responseMiddleware = (
 					data: result.data,
 				}),
 				headers: {
+					"Access-Control-Allow-Origin": "*",
+					"Access-Control-Allow-Credentials": true,
 					"Content-Type": "application/json",
 				},
 			}
@@ -39,6 +41,8 @@ const responseMiddleware = (
 					error: err.errorCode || undefined,
 				}),
 				headers: {
+					"Access-Control-Allow-Origin": "*",
+					"Access-Control-Allow-Credentials": true,
 					"Content-Type": "application/json",
 				},
 			}
