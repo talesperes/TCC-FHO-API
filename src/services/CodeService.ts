@@ -12,6 +12,7 @@ class CodeService {
 	constructor() {}
 
 	async send(phoneNumber: string, code: string): Promise<IResponse> {
+		console.log("sending verification code", code)
 		const client = twilio(ACCOUNT_SID, AUTH_TOKE)
 
 		await client.verify.v2
