@@ -24,7 +24,7 @@ functions:
   handler: dist/src/handlers/sendCode/handler.sendCode
   events:
    - http:
-      path: code/sendCode
+      path: code/send
       method: post
       cors: true
 
