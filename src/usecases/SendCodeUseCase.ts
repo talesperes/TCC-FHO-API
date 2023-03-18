@@ -24,7 +24,9 @@ class SendCodeUseCase {
 
 		const currentTime = Date.now()
 
-		if (lastCodeTime && !(Math.abs(currentTime - lastCodeTime) / 1000 > 60)) {
+		const diffGreaterThanLimit = Math.abs(currentTime - lastCodeTime) / 1000 > 60
+
+		if (lastCodeTime && !diffGreaterThanLimit) {
 			throw new CodeAlreadySentException()
 		}
 
