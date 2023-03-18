@@ -18,9 +18,9 @@ class CodeService {
 		await client.verify.v2
 			.services(SERVICE_SID)
 			.verifications.create({
+				customCode: "123456",
 				to: phoneNumber,
 				channel: "sms",
-				customCode: code,
 			})
 			.catch((error) => {
 				console.error(error)
