@@ -21,7 +21,6 @@ class SendCodeUseCase {
 
 		const { phoneNumber } = user
 		const sendCodeResponse = await this.codeService.send(phoneNumber)
-		console.log("sendCodeResponse ======= ", sendCodeResponse)
 		const {
 			message,
 			data: { serviceSid },

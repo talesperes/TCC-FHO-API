@@ -24,8 +24,6 @@ class CodeService {
 				throw new VerificationCodeNotSentException()
 			})
 
-		console.log("response ==== ", response)
-
 		return {
 			message: "verification code sent",
 			data: { serviceSid: response.serviceSid },
