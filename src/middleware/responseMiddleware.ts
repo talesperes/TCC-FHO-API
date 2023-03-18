@@ -20,6 +20,7 @@ interface Response {
 const responseMiddleware: MiddlewareFunction =
 	(fn) =>
 	async (...args) => {
+		console.log("responseMiddleware ======= ", { ...args })
 		try {
 			const result = await fn(...args)
 
