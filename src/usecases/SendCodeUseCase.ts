@@ -24,13 +24,13 @@ class SendCodeUseCase {
 		console.log("sendCodeResponse ======= ", sendCodeResponse)
 		const {
 			message,
-			data: { verificationSid },
+			data: { serviceSid },
 		} = sendCodeResponse
 
 		const lastCodeTime = Date.now()
 
 		await this.userRepository.updateUser(cpf, {
-			verificationSid,
+			serviceSid,
 			lastCodeTime,
 		})
 
