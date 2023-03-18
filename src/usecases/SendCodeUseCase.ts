@@ -14,7 +14,7 @@ class SendCodeUseCase {
 	}
 
 	async execute(cpf: string): Promise<IResponse> {
-		throw new UserNotFoundException()
+		return { message: "test" }
 		// const user = await this.userRepository.getUserByCPF(cpf)
 		// if (!user) {
 		// 	throw new UserNotFoundException()
