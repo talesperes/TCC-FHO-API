@@ -1,7 +1,11 @@
 class BaseException extends Error {
-  constructor(message: string, public errorCode: string, public code: number) {
-    super(message);
+  constructor(
+    public message: string,
+    public errorCode: string,
+    public statusCode: number
+  ) {
+    super(message)
   }
 }
 
-export default BaseException;
+export default BaseException
