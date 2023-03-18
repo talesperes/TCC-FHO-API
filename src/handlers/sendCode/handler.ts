@@ -1,13 +1,13 @@
 import { APIGatewayEvent } from "aws-lambda"
-import { IResponse } from "../definitions/responses"
-import responseMiddleware from "../middleware/responseMiddleware"
-import UserRepository from "../repositories/UserRepository"
-import CodeService from "../services/CodeService"
-import SendCodeUseCase from "../usecases/SendCodeUseCase"
+import { IResponse } from "../../definitions/responses"
+import responseMiddleware from "../../middleware/responseMiddleware"
+import UserRepository from "../../repositories/UserRepository"
+import CodeService from "../../services/CodeService"
+import SendCodeUseCase from "../../usecases/SendCodeUseCase"
 
 const MONGODB_URI = process.env.MONGODB_URI || ""
 
-const SendCodeHandler = responseMiddleware(
+const handler = responseMiddleware(
 	async (event: APIGatewayEvent): Promise<IResponse> => {
 		const { cpf }: { cpf: string } = JSON.parse(event.body!)
 		const repository = new UserRepository(MONGODB_URI)
@@ -17,4 +17,4 @@ const SendCodeHandler = responseMiddleware(
 	}
 )
 
-export { SendCodeHandler as sendCode }
+export { handler as sendCode }

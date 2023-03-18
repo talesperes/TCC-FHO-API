@@ -21,10 +21,10 @@ provider:
 
 functions:
  sendCode:
-  handler: dist/src/handlers.sendCode
+  handler: dist/src/handlers/sendCode/handler.sendCode
   events:
    - http:
-      path: code/send
+      path: code/sendCode
       method: post
       cors: true
 
