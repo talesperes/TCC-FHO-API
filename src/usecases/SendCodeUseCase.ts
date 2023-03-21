@@ -18,21 +18,21 @@ class SendCodeUseCase {
 		if (!user) {
 			throw new UserNotFoundException()
 		}
-		const { phoneNumber, lastCodeTime } = user
+		const { phoneNumber, lastSentCodeTime } = user
 		const currentTime = Date.now()
-		const diffGreaterThanLimit = Math.abs(currentTime - lastCodeTime) / 1000 > 60
-		if (lastCodeTime && !diffGreaterThanLimit) {
+		const diffGreaterThanLimit =
+			Math.abs(currentTime - lastSentCodeTime) / 1000 > 60
+		if (lastSentCodeTime && !diffGreaterThanLimit) {
 			throw new CodeAlreadySentException()
 		}
 		const sendCodeResponse = await this.codeService.send(phoneNumber)
 		const {
 			message,
-			data: { sid },
+			data: { response },
 		} = sendCodeResponse
 		const newLastCodeTime = Date.now()
 		await this.userRepository.updateUser(cpf, {
-			sid,
-			lastCodeTime: newLastCodeTime,
+			lastSentCodeTime: newLastCodeTime,
 		})
 		return { message }
 	}
