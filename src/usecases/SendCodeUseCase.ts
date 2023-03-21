@@ -28,10 +28,11 @@ class SendCodeUseCase {
 		const sendCodeResponse = await this.codeService.send(phoneNumber)
 		const {
 			message,
-			data: { response },
+			data: { code },
 		} = sendCodeResponse
 		const newLastCodeTime = Date.now()
 		await this.userRepository.updateUser(cpf, {
+			code,
 			lastSentCodeTime: newLastCodeTime,
 		})
 		return { message }

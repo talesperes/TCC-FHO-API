@@ -1,27 +1,27 @@
 import UserNotFoundException from "../exceptions/UserNotFoundException"
 import UserRepository from "../repositories/UserRepository"
-import CodeService from "../services/CodeService"
 import { IResponse } from "../definitions/responses"
+import InvalidVerificationCodeException from "../exceptions/InvalidVerificationCodeException"
 
 class SendCodeUseCase {
-	constructor(
-		private userRepository: UserRepository,
-		private codeService: CodeService
-	) {
+	constructor(private userRepository: UserRepository) {
 		this.userRepository = userRepository
-		this.codeService = codeService
 	}
 
-	async execute(cpf: string, code: string): Promise<IResponse> {
+	async execute(cpf: string, codeReceived: string): Promise<IResponse> {
 		const user = await this.userRepository.getUserByCPF(cpf)
 
 		if (!user) {
 			throw new UserNotFoundException()
 		}
 
-		const { name } = user
+		const { code } = user
 
-		return await this.codeService.verify(name, code)
+		if (codeReceived != code) {
+			throw new InvalidVerificationCodeException()
+		}
+
+		return { message: "code verified" }
 	}
 }
 

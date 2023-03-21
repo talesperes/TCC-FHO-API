@@ -28,28 +28,8 @@ class CodeService {
 
 		return {
 			message: "verification code sent",
-			data: { response },
+			data: { code, response },
 		}
-	}
-
-	async verify(sid: string, code: string): Promise<IResponse> {
-		const client = twilio(ACCOUNT_SID, AUTH_TOKE)
-
-		const verification = await client.verify.v2
-			.services(SERVICE_SID)
-			.verificationChecks.create({
-				code,
-				verificationSid: sid,
-			})
-			.catch(() => {
-				throw new VerificationCodeCheckException()
-			})
-
-		if (verification.status !== "approved") {
-			throw new InvalidVerificationCodeException()
-		}
-
-		return { message: "code approved" }
 	}
 }
 

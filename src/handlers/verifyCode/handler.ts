@@ -11,8 +11,7 @@ const verifyCode = responseMiddleware(
 	async (event: APIGatewayEvent): Promise<IResponse> => {
 		const { cpf, code }: { cpf: string; code: string } = JSON.parse(event.body!)
 		const repository = new UserRepository(MONGODB_URI)
-		const codeService = new CodeService()
-		const usecase = new VerifyCodeUseCase(repository, codeService)
+		const usecase = new VerifyCodeUseCase(repository)
 		return await usecase.execute(cpf, code)
 	}
 )
