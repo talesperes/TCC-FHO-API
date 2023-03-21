@@ -19,7 +19,7 @@ class CodeService {
 
 		const body = `Seu código de verificação é ${code} [Agendamento de Consulta]`
 
-		const response = client.messages
+		const response = await client.messages
 			.create({ body, from: "+15513103275", to: phoneNumber })
 			.catch((error) => {
 				console.error(error)
