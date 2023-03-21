@@ -3,6 +3,7 @@ import VerificationCodeNotSentException from "../exceptions/VerificationCodeNotS
 import InvalidVerificationCodeException from "../exceptions/InvalidVerificationCodeException"
 import VerificationCodeCheckException from "../exceptions/VerificationCodeCheckException"
 import { IResponse } from "../definitions/responses"
+import { verificationCodeGenerator } from "../functions/utils"
 
 const ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID
 const AUTH_TOKE = process.env.TWILIO_AUTH_TOKEN
@@ -13,12 +14,13 @@ class CodeService {
 
 	async send(phoneNumber: string): Promise<IResponse> {
 		const client = twilio(ACCOUNT_SID, AUTH_TOKE)
-		const response = await client.verify.v2
-			.services(SERVICE_SID)
-			.verifications.create({
-				to: phoneNumber,
-				channel: "sms",
-			})
+
+		const code = verificationCodeGenerator()
+
+		const body = `Seu código de verificação é ${code} [Agendamento de Consulta]`
+
+		const response = client.messages
+			.create({ body, from: "+15513103275", to: phoneNumber })
 			.catch((error) => {
 				console.error(error)
 				throw new VerificationCodeNotSentException()
@@ -26,7 +28,7 @@ class CodeService {
 
 		return {
 			message: "verification code sent",
-			data: { sid: response.sid },
+			data: { response },
 		}
 	}
 
