@@ -12,7 +12,7 @@ class GetUserUseCase {
     if (!user) {
       throw new UserNotFoundException();
     }
-    return { user };
+    return { message: "User retrieved successfully", data: { user } };
   }
 }
 

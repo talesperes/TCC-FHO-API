@@ -13,7 +13,7 @@ class UpdateUserUseCase {
     if (!user) {
       throw new UserNotFoundException();
     }
-    return { user };
+    return { message: "User updated successfully", data: { user } };
   }
 }
 

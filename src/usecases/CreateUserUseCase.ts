@@ -9,7 +9,7 @@ class CreateUserUseCase {
 
   async execute(userData: IUser): Promise<IResponse> {
     const user = await this.userRepository.createUser(userData);
-    return { user };
+    return { message: "User created successfully", data: { user } };
   }
 }
 
