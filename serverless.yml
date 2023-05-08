@@ -1,39 +1,67 @@
 service: tcc-api
 
 provider:
- name: aws
- runtime: nodejs14.x
- stage: dev
- region: sa-east-1
- environment:
-  MONGODB_URI: ${env:MONGODB_URI}
-  JWT_SECRET_KEY: ${env:JWT_SECRET_KEY}
-  TWILIO_ACCOUNT_SID: ${env:TWILIO_ACCOUNT_SID}
-  TWILIO_AUTH_TOKEN: ${env:TWILIO_AUTH_TOKEN}
-  TWILIO_SERVICE_SID: ${env:TWILIO_SERVICE_SID}
- iamRoleStatements:
-  - Effect: Allow
-    Action:
-     - logs:CreateLogGroup
-     - logs:CreateLogStream
-     - logs:PutLogEvents
-    Resource: "*"
+  name: aws
+  runtime: nodejs14.x
+  stage: dev
+  region: sa-east-1
+  environment:
+    MONGODB_URI: ${env:MONGODB_URI}
+    JWT_SECRET_KEY: ${env:JWT_SECRET_KEY}
+    TWILIO_ACCOUNT_SID: ${env:TWILIO_ACCOUNT_SID}
+    TWILIO_AUTH_TOKEN: ${env:TWILIO_AUTH_TOKEN}
+    TWILIO_SERVICE_SID: ${env:TWILIO_SERVICE_SID}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - logs:CreateLogGroup
+        - logs:CreateLogStream
+        - logs:PutLogEvents
+      Resource: "*"
 
 functions:
- sendCode:
-  handler: dist/handlers/sendCode/handler.sendCode
-  events:
-   - http:
-      path: code/send
-      method: post
-      cors: true
- verifyCode:
-  handler: dist/handlers/verifyCode/handler.verifyCode
-  events:
-   - http:
-      path: code/verify
-      method: post
-      cors: true
+  sendCode:
+    handler: dist/handlers/sendCode/handler.sendCode
+    events:
+      - http:
+          path: code/send
+          method: post
+          cors: true
+  verifyCode:
+    handler: dist/handlers/verifyCode/handler.verifyCode
+    events:
+      - http:
+          path: code/verify
+          method: post
+          cors: true
+  getUser:
+    handler: dist/handlers/getUser/handler.getUser
+    events:
+      - http:
+          path: user
+          method: get
+          cors: true
+  createUser:
+    handler: dist/handlers/createUser/handler.createUser
+    events:
+      - http:
+          path: user
+          method: post
+          cors: true
+  updateUser:
+    handler: dist/handlers/updateUser/handler.updateUser
+    events:
+      - http:
+          path: user
+          method: put
+          cors: true
+  deleteUser:
+    handler: dist/handlers/deleteUser/handler.deleteUser
+    events:
+      - http:
+          path: user
+          method: delete
+          cors: true
 
 plugins:
- - serverless-offline
+  - serverless-offline
