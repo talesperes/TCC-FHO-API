@@ -2,7 +2,7 @@ import { APIGatewayEvent, Context, ProxyResult } from "aws-lambda";
 import JWTService from "../services/JWTService";
 import { IResponse } from "../definitions/responses";
 
-interface JWTContext implements Context {
+interface JWTContext extends Context {
   jwtPayload?: any
 }
 
