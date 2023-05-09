@@ -62,6 +62,12 @@ functions:
           path: user
           method: delete
           cors: true
-
+  loginUser:
+    handler: dist/handlers/loginUser/handler.loginUser
+    events:
+      - http:
+          path: user/login
+          method: post
+          cors: true
 plugins:
   - serverless-offline
