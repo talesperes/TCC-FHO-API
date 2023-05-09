@@ -7,6 +7,7 @@ export enum UserType {
 }
 
 export interface IUser extends Document {
+	_id: string
 	cpf: string
 	name: string
 	phoneNumber: string

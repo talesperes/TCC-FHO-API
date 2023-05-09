@@ -7,7 +7,7 @@ class JWTService {
     return jwt.sign(payload, JWT_SECRET_KEY, { expiresIn });
   }
 
-  verifyToken(token: string): object | null {
+  verifyToken(token: string): any {
     try {
       const decoded = jwt.verify(token, JWT_SECRET_KEY);
       return decoded;

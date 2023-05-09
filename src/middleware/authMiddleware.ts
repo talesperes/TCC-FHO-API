@@ -2,12 +2,16 @@ import { APIGatewayEvent, Context, ProxyResult } from "aws-lambda";
 import JWTService from "../services/JWTService";
 import { IResponse } from "../definitions/responses";
 
+interface JWTContext implements Context {
+  jwtPayload?: any
+}
+
 const jwtService = new JWTService();
 
 const authMiddleware = (
-  handler: (event: APIGatewayEvent, context: Context) => Promise<ProxyResult>
+  handler: (event: APIGatewayEvent, context: JWTContext) => Promise<ProxyResult>
 ) => {
-  return async (event: APIGatewayEvent, context: Context) => {
+  return async (event: APIGatewayEvent, context: JWTContext) => {
     const token = event.headers.Authorization?.split(" ")[1];
 
     if (!token) {
