@@ -31,10 +31,13 @@ class SendCodeUseCase {
 			data: { code },
 		} = sendCodeResponse
 		const newLastCodeTime = Date.now()
-		await this.userRepository.updateUser(user._id, {
+		const updatedUser = await this.userRepository.updateUser(user._id, {
 			code,
 			lastSentCodeTime: newLastCodeTime,
 		})
+		console.debug("user._id ==== ", user._id)
+		console.debug("code === ", code)
+		console.debug("newLastCodeTime === ", newLastCodeTime)
 		return { message }
 	}
 }
