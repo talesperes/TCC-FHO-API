@@ -18,6 +18,7 @@ class SendCodeUseCase {
 		if (!user) {
 			throw new UserNotFoundException()
 		}
+		console.debug("user === ", user)
 		const { phoneNumber, lastSentCodeTime } = user
 		const currentTime = Date.now()
 		const diffGreaterThanLimit =
