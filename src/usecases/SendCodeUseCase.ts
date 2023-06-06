@@ -31,7 +31,7 @@ class SendCodeUseCase {
 			data: { code },
 		} = sendCodeResponse
 		const newLastCodeTime = Date.now()
-		await this.userRepository.updateUser(cpf, {
+		await this.userRepository.updateUser(user._id, {
 			code,
 			lastSentCodeTime: newLastCodeTime,
 		})
